@@ -29,7 +29,6 @@ class DoneHandler:
             self.on_delete_done_item, DeleteDonePageCallback.filter()
         )
 
-    # noinspection PyMethodMayBeStatic
     async def on_done_page(self, callback: CallbackQuery, callback_data: DonePageCallback, items_per_page: int) -> None:
         page = max(callback_data.page, 0)
         tasks, total, has_prev, has_next = await PaginationService(True).fetch_tasks_page(
@@ -47,7 +46,6 @@ class DoneHandler:
         )
         await callback.answer()
 
-    # noinspection PyMethodMayBeStatic
     async def on_view_done_item(self, callback: CallbackQuery, callback_data: DoneItemCallback) -> None:
         todo = await Todo.filter(
             id=callback_data.todo_id,
@@ -64,7 +62,6 @@ class DoneHandler:
         await callback.message.edit_text(details, reply_markup=(build_done_item_keyboard(callback_data.todo_id, callback_data.page)))
         await callback.answer()
 
-    # noinspection PyMethodMayBeStatic
     async def on_delete_done_item(self, callback: CallbackQuery, callback_data: DeleteDonePageCallback, items_per_page: int) -> None:
         todo = await Todo.filter(
             id=callback_data.todo_id,

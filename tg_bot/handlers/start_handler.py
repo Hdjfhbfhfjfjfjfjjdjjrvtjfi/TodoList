@@ -21,14 +21,12 @@ class StartHandler:
             self.on_back_to_start, BackToStartCallback.filter()
         )
 
-    # noinspection PyMethodMayBeStatic
     async def cmd_start(self, message: Message) -> None:
         await message.answer(
             get_start_menu_text(),
             reply_markup=build_start_keyboard(),
         )
 
-    # noinspection PyMethodMayBeStatic
     async def on_back_to_start(self, callback: CallbackQuery) -> None:
         await callback.message.edit_text(get_start_menu_text())
         await callback.message.edit_reply_markup(reply_markup=build_start_keyboard())

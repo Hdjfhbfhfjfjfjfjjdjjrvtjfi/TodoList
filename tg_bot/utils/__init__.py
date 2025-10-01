@@ -1,5 +1,5 @@
 from .init_database import init_tortoise_database
-from .interfaces import KeyboardInterface
+from .interfaces import FlippingKeyboardInterface
 from .keyboard_factory import KeyboardFactory
 from .texts import (
     get_start_menu_text,
@@ -25,7 +25,7 @@ from .texts import (
 
 __all__ = [
     "init_tortoise_database",
-    "KeyboardInterface",
+    "FlippingKeyboardInterface",
     "KeyboardFactory",
     "get_start_menu_text",
     "get_pending_tasks_text",

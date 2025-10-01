@@ -10,10 +10,10 @@ from tg_bot.utils import (
     get_page_button_text,
     get_back_button_text,
 )
-from tg_bot.utils.interfaces import KeyboardInterface
+from tg_bot.utils.interfaces import FlippingKeyboardInterface
 
 
-class PendingKeyboard(KeyboardInterface):
+class PendingFlippingKeyboard(FlippingKeyboardInterface):
     
     def __init__(self):
         super().__init__()
@@ -57,7 +57,6 @@ class PendingKeyboard(KeyboardInterface):
         if row:
             todos.append(row)
 
-        # Back to start menu row
         todos.append([
             InlineKeyboardButton(text=get_back_button_text(), callback_data=BackToStartCallback(page=page).pack())
         ])
@@ -71,7 +70,7 @@ def build_pending_keyboard(
     todos: List[Todo] | None = None,
     current_page: int | None = None,
 ) -> InlineKeyboardMarkup:
-    keyboard = PendingKeyboard()
+    keyboard = PendingFlippingKeyboard()
     return keyboard.build_keyboard(page, has_prev, has_next, todos, current_page)
 
 

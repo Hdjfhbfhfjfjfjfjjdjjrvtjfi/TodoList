@@ -29,7 +29,6 @@ class PendingHandler:
             self.on_mark_done, MarkDoneCallback.filter()
         )
 
-    # noinspection PyMethodMayBeStatic
     async def on_pending_page(self, callback: CallbackQuery, callback_data: PendingPageCallback, items_per_page: int
                               )-> None:
         page = max(callback_data.page, 0)
@@ -49,7 +48,6 @@ class PendingHandler:
         )
         await callback.answer()
 
-    # noinspection PyMethodMayBeStatic
     async def on_view_todo_item(self, callback: CallbackQuery, callback_data: PendingItemCallback) -> None:
         todo = await Todo.filter(
             id=callback_data.todo_id,

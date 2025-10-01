@@ -5,8 +5,7 @@ from aiogram.types import InlineKeyboardMarkup
 from tg_bot.models import Todo
 
 
-class KeyboardInterface(ABC):
-    
+class FlippingKeyboardInterface(ABC):
     def __init__(self):
         pass
     

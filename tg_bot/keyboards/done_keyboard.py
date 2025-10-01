@@ -10,10 +10,10 @@ from tg_bot.utils import (
     get_page_button_text,
     get_back_button_text,
 )
-from tg_bot.utils.interfaces import KeyboardInterface
+from tg_bot.utils.interfaces import FlippingKeyboardInterface
 
 
-class DoneKeyboard(KeyboardInterface):
+class DoneFlippingKeyboard(FlippingKeyboardInterface):
     
     def __init__(self):
         super().__init__()
@@ -67,5 +67,5 @@ class DoneKeyboard(KeyboardInterface):
 
 
 def build_done_keyboard(page: int, has_prev: bool, has_next: bool, todos: list) -> InlineKeyboardMarkup:
-    keyboard = DoneKeyboard()
+    keyboard = DoneFlippingKeyboard()
     return keyboard.build_keyboard(page, has_prev, has_next, todos)

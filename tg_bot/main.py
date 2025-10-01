@@ -17,7 +17,6 @@ from tg_bot.utils import init_tortoise_database
 
 
 async def main() -> None:
-    # Load environment variables from project root .env
     project_root = Path(__file__).resolve().parents[1]
     load_dotenv(project_root / ".env")
 
@@ -25,7 +24,6 @@ async def main() -> None:
     if not token:
         raise RuntimeError("TOKEN не задан. Установите переменную окружения.")
 
-    # Initialize database using URL from .env
     db_url = os.getenv("DATABASE_PATH")
     await init_tortoise_database(
         db_url=db_url,

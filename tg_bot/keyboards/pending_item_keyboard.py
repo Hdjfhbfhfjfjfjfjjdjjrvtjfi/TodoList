@@ -5,10 +5,10 @@ from typing import Optional, List
 from tg_bot.filters.callback_data import PendingPageCallback, MarkDoneCallback
 from tg_bot.models import Todo
 from tg_bot.utils import get_back_to_list_button_text, get_mark_done_button_text
-from tg_bot.utils.interfaces import KeyboardInterface
+from tg_bot.utils.interfaces import FlippingKeyboardInterface
 
 
-class PendingItemKeyboard(KeyboardInterface):
+class PendingItemFlippingKeyboard(FlippingKeyboardInterface):
     
     def __init__(self):
         super().__init__()
@@ -40,5 +40,5 @@ class PendingItemKeyboard(KeyboardInterface):
 
 
 def build_todo_item_keyboard(todo_id: int, page: int) -> InlineKeyboardMarkup:
-    keyboard = PendingItemKeyboard()
+    keyboard = PendingItemFlippingKeyboard()
     return keyboard.build_keyboard(page=page, todo_id=todo_id)

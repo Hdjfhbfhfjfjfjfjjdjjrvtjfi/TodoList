@@ -1,5 +1,5 @@
-from .keyboard_interface import KeyboardInterface
+from .keyboard_interface import FlippingKeyboardInterface
 
 __all__ = [
-    "KeyboardInterface",
+    "FlippingKeyboardInterface",
 ]
