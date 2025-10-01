@@ -1,9 +1,12 @@
+__all__ = [
+    "router"
+]
 from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery
 
 from tg_bot.filters.callback_data import BackToStartCallback
-from tg_bot.keyboards import build_start_keyboard
+from tg_bot.keyboards import StartKeyboard
 from tg_bot.utils import get_start_menu_text
 
 
@@ -24,12 +27,12 @@ class StartHandler:
     async def cmd_start(self, message: Message) -> None:
         await message.answer(
             get_start_menu_text(),
-            reply_markup=build_start_keyboard(),
+            reply_markup=StartKeyboard().build_keyboard(),
         )
 
     async def on_back_to_start(self, callback: CallbackQuery) -> None:
         await callback.message.edit_text(get_start_menu_text())
-        await callback.message.edit_reply_markup(reply_markup=build_start_keyboard())
+        await callback.message.edit_reply_markup(reply_markup=StartKeyboard().build_keyboard())
         await callback.answer()
 
 

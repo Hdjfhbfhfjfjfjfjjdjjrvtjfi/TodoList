@@ -1,3 +1,6 @@
+__all__ = [
+    "init_tortoise_database"
+]
 from typing import Sequence
 
 from tortoise import Tortoise

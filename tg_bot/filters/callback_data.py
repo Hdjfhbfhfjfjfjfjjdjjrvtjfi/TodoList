@@ -1,43 +1,45 @@
+__all__ = [
+    "PendingPageCallback",
+    "DonePageCallback",
+    "MarkDoneCallback",
+    "PendingItemCallback",
+    "DoneItemCallback",
+    "AddTaskCallback",
+    "DeleteDonePageCallback",
+    "BackToStartCallback",
+]
 from aiogram.filters.callback_data import CallbackData
 
+from tg_bot.utils.interfaces import IFlippingPageCallback, IActionWithTodoItemAndTodoItemCallback
 
-class PendingPageCallback(CallbackData, prefix="pending"):
+
+class PendingPageCallback(CallbackData, IFlippingPageCallback, prefix="pending"):
     page: int
 
 
-class DonePageCallback(CallbackData, prefix="view_done"):
+class DonePageCallback(CallbackData, IFlippingPageCallback, prefix="view_done"):
     page: int
 
 
 class AddTaskCallback(CallbackData, prefix="add_task"):
     pass
 
-
-class DeleteDoneCallback(CallbackData, prefix="delete_done"):
-    pass
-
-
-class PendingItemCallback(CallbackData, prefix="pending_item"):
+class PendingItemCallback(CallbackData, IActionWithTodoItemAndTodoItemCallback, prefix="pending_item"):
     todo_id: int
     page: int
 
+class DoneItemCallback(CallbackData, IActionWithTodoItemAndTodoItemCallback, prefix="done_item"):
+    todo_id: int
+    page: int
+
+class MarkDoneCallback(CallbackData, IActionWithTodoItemAndTodoItemCallback, prefix="mark_done"):
+    todo_id: int
+    page: int
+
+
+class DeleteDonePageCallback(CallbackData, IActionWithTodoItemAndTodoItemCallback, prefix="delete_done_item"):
+    todo_id: int
+    page: int
 
 class BackToStartCallback(CallbackData, prefix="back_start"):
     pass
-
-
-class MarkDoneCallback(CallbackData, prefix="mark_done"):
-    todo_id: int
-    page: int
-
-
-class DeleteDonePageCallback(CallbackData, prefix="delete_done_item"):
-    todo_id: int
-    page: int
-
-
-class DoneItemCallback(CallbackData, prefix="done_item"):
-    todo_id: int
-    page: int
-
-

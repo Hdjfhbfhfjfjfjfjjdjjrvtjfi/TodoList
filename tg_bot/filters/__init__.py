@@ -4,10 +4,9 @@ __all__ = [
     "PendingPageCallback",
     "DonePageCallback",
     "AddTaskCallback",
-    "DeleteDoneCallback",
     "PendingItemCallback",
     "BackToStartCallback",
     "MarkDoneCallback",
-    "DeleteDoneCallback",
     "DoneItemCallback",
+    "DeleteDonePageCallback",
 ]

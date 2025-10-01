@@ -19,12 +19,13 @@ from tg_bot.utils import init_tortoise_database
 async def main() -> None:
     project_root = Path(__file__).resolve().parents[1]
     load_dotenv(project_root / ".env")
-
     token = os.getenv("TOKEN")
     if not token:
         raise RuntimeError("TOKEN не задан. Установите переменную окружения.")
-
     db_url = os.getenv("DATABASE_PATH")
+    if not db_url:
+        raise RuntimeError("DATABASE_PATH не задан. Установите переменную окружения.")
+
     await init_tortoise_database(
         db_url=db_url,
         model_modules=("tg_bot.models",),
@@ -33,7 +34,7 @@ async def main() -> None:
 
     bot = Bot(token=token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher()
-    dp.include_router(*routers)
+    dp.include_routers(*routers)
 
     try:
         await dp.start_polling(bot, items_per_page=int(os.getenv("ITEMS_PER_PAGE")))
