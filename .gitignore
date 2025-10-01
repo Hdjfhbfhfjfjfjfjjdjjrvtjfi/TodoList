@@ -1,5 +1,8 @@
 .env
-database/**
+database/
+database/bot_db.db
+database/bot_db.db-shm
+database/bot_db.db-wal
 .idea/**
 **/__pycache__
 .cursor/**
