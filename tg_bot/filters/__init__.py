@@ -3,7 +3,7 @@ from .callback_data import *
 __all__ = [
     "PendingPageCallback",
     "DonePageCallback",
-    "AddTaskCallback",
+    "AddTodoItemCallback",
     "PendingItemCallback",
     "BackToStartCallback",
     "MarkDoneCallback",

@@ -15,7 +15,8 @@ __all__ = [
     "get_next_page_button_text",
     "get_prev_page_button_text",
     "get_back_to_list_button_text",
-    "get_mark_done_button_text"
+    "get_mark_done_button_text",
+    "get_get_todo_item_description_text"
 ]
 def get_start_menu_text() -> str:
     return "Главное меню. Выберите действие:"
@@ -82,3 +83,6 @@ def get_mark_done_button_text() -> str:
 
 def get_delete_done_item_button_text() -> str:
     return "🗑 Удалить"
+
+def get_get_todo_item_description_text() -> str:
+    return "Напишите что бы вы хотели сделать "

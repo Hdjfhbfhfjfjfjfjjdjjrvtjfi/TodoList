@@ -4,7 +4,7 @@ __all__ = [
     "MarkDoneCallback",
     "PendingItemCallback",
     "DoneItemCallback",
-    "AddTaskCallback",
+    "AddTodoItemCallback",
     "DeleteDonePageCallback",
     "BackToStartCallback",
 ]
@@ -21,7 +21,7 @@ class DonePageCallback(CallbackData, IFlippingPageCallback, prefix="view_done"):
     page: int
 
 
-class AddTaskCallback(CallbackData, prefix="add_task"):
+class AddTodoItemCallback(CallbackData, prefix="add_task"):
     pass
 
 class PendingItemCallback(CallbackData, IActionWithTodoItemAndTodoItemCallback, prefix="pending_item"):

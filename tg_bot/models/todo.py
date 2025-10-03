@@ -1,6 +1,9 @@
 __all__ = [
     "Todo"
 ]
+
+from xmlrpc.client import DateTime
+
 from tortoise import fields
 from tortoise.models import Model
 
@@ -14,3 +17,7 @@ class Todo(Model):
 
     class Meta:
         table = "todos"
+
+    @classmethod
+    async def create_from_fields_parameters(cls, user_id: int, text: str) -> None:
+        await cls.create(user_id=user_id, text=text)

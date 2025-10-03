@@ -1,5 +1,4 @@
 from .init_database import init_tortoise_database
-from .types import text_function
 from .texts import (
     get_todo_item_button_text,
     get_start_menu_text,
@@ -18,6 +17,7 @@ from .texts import (
     get_delete_done_item_button_text,
     get_done_tasks_text,
     get_task_deleted_text,
+    get_get_todo_item_description_text,
 )
 
 __all__ = [
@@ -38,7 +38,8 @@ __all__ = [
     "get_delete_done_item_button_text",
     "get_done_tasks_text",
     "get_task_deleted_text",
-    "get_todo_item_button_text"
+    "get_todo_item_button_text",
+    "get_get_todo_item_description_text",
 ]
 
 

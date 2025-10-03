@@ -18,19 +18,20 @@ class StartHandler:
     
     def _register_handlers(self) -> None:
         self.router.message.register(
-            self.cmd_start, Command("start")
+            self._on_start, Command("start")
         )
         self.router.callback_query.register(
-            self.on_back_to_start, BackToStartCallback.filter()
+            self._on_back_to_start, BackToStartCallback.filter()
         )
 
-    async def cmd_start(self, message: Message) -> None:
+    async def _on_start(self, message: Message) -> None:
         await message.answer(
             get_start_menu_text(),
             reply_markup=StartKeyboard().build_keyboard(),
         )
+        await message.delete()
 
-    async def on_back_to_start(self, callback: CallbackQuery) -> None:
+    async def _on_back_to_start(self, callback: CallbackQuery) -> None:
         await callback.message.edit_text(get_start_menu_text())
         await callback.message.edit_reply_markup(reply_markup=StartKeyboard().build_keyboard())
         await callback.answer()

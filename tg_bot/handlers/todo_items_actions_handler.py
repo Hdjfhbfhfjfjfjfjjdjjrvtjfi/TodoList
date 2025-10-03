@@ -29,7 +29,7 @@ Y = TypeVar('Y', bound=IActionWithTodoItemAndTodoItemCallback | CallbackData)
 class TodoItemsActionsHandler(Generic[T, K, Y]):
     def __init__(
             self,
-            router: Router,
+            todo_items_actions_router: Router,
             done: bool,
             on_view_text: Callable[[int], str],
             on_view_item_text: Callable[[str, bool, str], str],
@@ -38,7 +38,7 @@ class TodoItemsActionsHandler(Generic[T, K, Y]):
             on_view_item_callback: type[IActionWithTodoItemAndTodoItemCallback | CallbackData],
             on_item_action_callback: type[IActionWithTodoItemAndTodoItemCallback | CallbackData]
     ) -> None:
-        self.router = router
+        self.router = todo_items_actions_router
         self.done = done
         self.pagination_service = PaginationService(done)
         self.on_view_text = on_view_text
@@ -51,16 +51,16 @@ class TodoItemsActionsHandler(Generic[T, K, Y]):
 
     def _register_handlers(self) -> None:
         self.router.callback_query.register(
-            self.on_done_page, self.on_view_callback.filter()
+            self._on_view_page, self.on_view_callback.filter()
         )
         self.router.callback_query.register(
-            self.on_view_done_item, self.on_view_item_callback.filter()
+            self._on_view_item, self.on_view_item_callback.filter()
         )
         self.router.callback_query.register(
-            self.on_delete_done_item, self.on_item_action_callback.filter()
+            self._on_item_action, self.on_item_action_callback.filter()
         )
 
-    async def on_done_page(self, callback: CallbackQuery, callback_data: T, items_per_page: int) -> None:
+    async def _on_view_page(self, callback: CallbackQuery, callback_data: T, items_per_page: int) -> None:
         page = max(callback_data.page, 0)
         tasks, total, has_prev, has_next = await self.pagination_service.fetch_tasks_page(
             callback.from_user.id,
@@ -79,12 +79,10 @@ class TodoItemsActionsHandler(Generic[T, K, Y]):
         )
         await callback.answer()
 
-    async def on_view_done_item(self, callback: CallbackQuery, callback_data: K) -> None:
-        todo = await Todo.filter(
+    async def _on_view_item(self, callback: CallbackQuery, callback_data: K) -> None:
+        todo = await Todo.get(
             id=callback_data.todo_id,
-            user_id=callback.from_user.id,
-            done=True,
-        ).first()
+        )
         created_str = getattr(todo, "created_at", None).strftime("%Y-%m-%d %H:%M") \
             if getattr(todo, "created_at", None) else "Неизвестно"
         await callback.message.edit_text(
@@ -102,17 +100,17 @@ class TodoItemsActionsHandler(Generic[T, K, Y]):
         )
         await callback.answer()
 
-    async def on_delete_done_item(self, callback: CallbackQuery, callback_data: Y, items_per_page: int) -> None:
-        todo = await Todo.filter(
+    async def _on_item_action(self, callback: CallbackQuery, callback_data: Y, items_per_page: int) -> None:
+        todo = await Todo.get(
             id=callback_data.todo_id,
-            user_id=callback.from_user.id,
-            done=True,
-        ).first()
-
-        if todo:
+        )
+        if self.done:
             await todo.delete()
-            await self.on_done_page(callback, self.on_view_callback(page=callback_data.page), items_per_page)
-            await callback.answer(self.callback_answer_text())
+        else:
+            todo.done = True
+            await todo.save()
+        await self._on_view_page(callback, self.on_view_callback(page=callback_data.page), items_per_page)
+        await callback.answer(self.callback_answer_text())
 
 router = Router()
 TodoItemsActionsHandler[DonePageCallback, DoneItemCallback, DeleteDonePageCallback](

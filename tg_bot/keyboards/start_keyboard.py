@@ -5,7 +5,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from tg_bot.filters.callback_data import (
     DonePageCallback,
-    AddTaskCallback,
+    AddTodoItemCallback,
     PendingPageCallback,
 )
 from tg_bot.utils import (
@@ -24,7 +24,7 @@ class StartKeyboard:
                     InlineKeyboardButton(text=get_done_button_text(), callback_data=DonePageCallback(page=0).pack()),
                 ],
                 [
-                    InlineKeyboardButton(text=get_add_button_text(), callback_data=AddTaskCallback().pack()),
+                    InlineKeyboardButton(text=get_add_button_text(), callback_data=AddTodoItemCallback().pack()),
                 ],
             ]
         )

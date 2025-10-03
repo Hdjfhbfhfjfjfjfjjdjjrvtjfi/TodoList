@@ -14,7 +14,7 @@ class PaginationService:
         offset = max(page, 0) * items_per_page
         tasks = (
             await Todo.filter(user_id=user_id, done=self.done)
-            .order_by("-id")
+            .order_by("id")
             .offset(offset)
             .limit(items_per_page)
             .all()
