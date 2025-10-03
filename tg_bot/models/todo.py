@@ -1,9 +1,6 @@
 __all__ = [
     "Todo"
 ]
-
-from xmlrpc.client import DateTime
-
 from tortoise import fields
 from tortoise.models import Model
 
